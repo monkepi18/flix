@@ -1,18 +1,25 @@
 import React, { useCallback } from 'react';
+import { useRouter } from 'next/router';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { PlayIcon } from '@heroicons/react/24/solid';
 
+import { MovieInterface } from '@/types';
 import FavoriteButton from '@/components/FavoriteButton';
+import useInfoModalStore from '@/hooks/useInfoModalStore';
 
 interface MovieCardProps {
-  data: Record<string, any>;
+    data: MovieInterface;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ 
-    data
- }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
+  const router = useRouter();
+  const { openModal } = useInfoModalStore();
+
+  const redirectToWatch = useCallback(() => router.push(`/watch/${data.id}`), [router, data.id]);
+
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
-      <img src={data.thumbnailUrl} alt="Movie" draggable={false} className="
+      <img onClick={redirectToWatch} src={data.thumbnailUrl} alt="Movie" draggable={false} className="
         cursor-pointer
         object-cover
         transition
@@ -42,7 +49,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
         group-hover:translate-x-[2vw]
         group-hover:opacity-100
       ">
-        <img src={data.thumbnailUrl} alt="Movie" draggable={false} className="
+        <img onClick={redirectToWatch} src={data.thumbnailUrl} alt="Movie" draggable={false} className="
           cursor-pointer
           object-cover
           transition
@@ -64,10 +71,13 @@ const MovieCard: React.FC<MovieCardProps> = ({
           rounded-b-md
           ">
           <div className="flex flex-row items-center gap-3">
-            <div onClick={() => {}} className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300">
+            <div onClick={redirectToWatch} className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300">
               <PlayIcon className="text-black w-4 lg:w-6" />
             </div>
             <FavoriteButton movieId={data.id} />
+            <div onClick={() => openModal(data?.id)} className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">
+              <ChevronDownIcon className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" />
+            </div>
           </div>
           <p className="text-green-400 font-semibold mt-4">
             New <span className="text-white">2023</span>
