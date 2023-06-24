@@ -17,7 +17,7 @@ const Watch = () => {
           <span className="font-light">Watching:</span> {data?.title}
         </p>
       </nav>
-      <video className="h-full w-full" autoPlay controls src={data?.videoUrl}></video>
+      <video className="h-full w-full" autoPlay controls src={`http://localhost:9002/video/${data?.videoUrl}`}></video>
     </div>
   )
 }
