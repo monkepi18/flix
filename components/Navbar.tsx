@@ -4,6 +4,7 @@ import {  BsChevronDown, BsSearch, BsBell } from 'react-icons/bs';
 import AccountMenu from '@/components/AccountMenu';
 import MobileMenu from '@/components/MobileMenu';
 import NavbarItem from '@/components/NavbarItem';
+import SearchBox from './SearchBox';
 
 const TOP_OFFSET = 66;
 
@@ -57,6 +58,7 @@ const Navbar = () => {
         <div className="flex flex-row ml-auto gap-7 items-center">
           <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
             <BsSearch className="w-6" />
+            <SearchBox/>
           </div>
           <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
             <BsBell className="w-6" />
